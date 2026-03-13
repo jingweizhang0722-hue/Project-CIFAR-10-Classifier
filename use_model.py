@@ -17,7 +17,7 @@ test_loader = DataLoader(test_dataset, shuffle=False, batch_size=batch_size)
 
 model = ResNet18()
 model.conv1 = nn.Conv2d(in_channels=3, out_channels=64, kernel_size=3, stride=1, padding=1, bias=False)
-model.load_state_dict(torch.load('models/model_exp05.pt'))
+model.load_state_dict(torch.load('models/model.pt'))
 
 def test():
     model.eval() # 切换到测试模式，BatchNorm 会使用全局均值

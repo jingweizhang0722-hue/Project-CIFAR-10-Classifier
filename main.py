@@ -16,8 +16,8 @@ batch_size = 128
 
 # prepare dataset
 transform_train = transforms.Compose([
-    transforms.RandomCrop(32, padding=4), # 随机裁剪
-    transforms.RandomHorizontalFlip(),    # 随机水平翻转
+    transforms.RandomCrop(32, padding=4),
+    transforms.RandomHorizontalFlip(),
     transforms.ToTensor(),
     transforms.Normalize(mean=[0.4914, 0.4822, 0.4465], std=[0.2023, 0.1994, 0.2010])
 ])
@@ -51,7 +51,7 @@ def train(epoch):
             running_loss = 0.0
 
 def test():
-    model.eval() # 切换到测试模式，BatchNorm会使用全局均值
+    model.eval()
     correct = 0
     total = 0
     with torch.no_grad():
@@ -89,7 +89,7 @@ if __name__ == '__main__':
         acc_list.append(acc)
         if acc > acc_max:
             acc_max = acc
-            torch.save(model.state_dict(), 'models/model_exp05.pt')
+            torch.save(model.state_dict(), 'models/model.pt')
         scheduler.step()
 
     epoch = np.arange(1, EPOCH + 1, 1)
@@ -101,9 +101,3 @@ if __name__ == '__main__':
     plt.show()
 
 writer.close()
-
-# exp01 : EPOCH=120 lr=0.05 step=30 gamma=0.25 0.00078125
-# exp02 : EPOCH=90  lr=0.15 step=14 gamma=0.3
-# exp03 : Cosine Annealing EPOCH=100 lr=0.08 eta_min=1e-4
-# exp04 : Cosine Annealing EPOCH=120 lr=0.06 eta_min=1e-4
-# exp05 : Cosine Annealing EPOCH=120 lr=0.04 eta_min=6e-5 加入了模型保存机制
