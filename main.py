@@ -67,9 +67,9 @@ def test():
 if __name__ == '__main__':
     writer = SummaryWriter('runs/cifar10_experiment')
 
-    device = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
     model = ResNet18()
     model.conv1 = nn.Conv2d(in_channels=3, out_channels=64, kernel_size=3, stride=1, padding=1, bias=False)
+    device = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
     model.to(device)
 
     dummy_input = torch.randn(1, 3, 32, 32).to(device)
@@ -77,7 +77,7 @@ if __name__ == '__main__':
  
     criterion = torch.nn.CrossEntropyLoss()
     optimizer = optim.SGD(model.parameters(), lr=0.05, momentum=0.9, weight_decay=5e-4)
-    scheduler = CosineAnnealingLR(optimizer, T_max=100, eta_min=1e-4)
+    scheduler = CosineAnnealingLR(optimizer, T_max=120, eta_min=1e-4)
 
     print("Training for %d epochs..." % EPOCH)
     acc_list = []
